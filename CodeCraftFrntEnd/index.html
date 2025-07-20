@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCraft</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                CodeCraft
+            </div>
+        </header>
+        
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Welcome to CodeCraft</h1>
+                <p class="auth-subtitle">Join our community of computer science enthusiasts and take your skills to the next level.</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input class="form-input" type="text" id="loginEmail" placeholder="Email or Username" required>
+                        <div id="loginEmailError" class="error-message hidden"></div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-input" type="password" id="loginPassword" placeholder="Password" required>
+                        <div id="loginPasswordError" class="error-message hidden"></div>
+                    </div>
+                    
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember Me</label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="loginBtn">
+                        <span id="loginText">Log In</span>
+                        <div id="loginLoader" class="loading hidden"></div>
+                    </button>
+                    
+                    <div id="loginError" class="error-message hidden"></div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <a href="#" class="auth-link" style="font-size: 0.875rem; text-decoration: none;">Forgot Password?</a>
+                    </div>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a class="auth-link" onclick="goToSignup()">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signupPage" class="hidden">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                CodeCraft
+            </div>
+            <nav class="nav-links">
+                <a class="nav-link" onclick="goToLogin()">Log in</a>
+            </nav>
+        </header>
+        
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Create your account</h1>
+                
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label class="form-label">Full name</label>
+                        <input class="form-input" type="text" id="signupFullName" placeholder="Enter your full name" required>
+                        <div id="signupFullNameError" class="error-message hidden"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input class="form-input" type="email" id="signupEmail" placeholder="Enter your email" required>
+                        <div id="signupEmailError" class="error-message hidden"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input class="form-input" type="text" id="signupUsername" placeholder="Choose a username" required>
+                        <div id="signupUsernameError" class="error-message hidden"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input class="form-input" type="password" id="signupPassword" placeholder="Create a password" required>
+                        <div id="signupPasswordError" class="error-message hidden"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input class="form-input" type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                        <div id="signupConfirmPasswordError" class="error-message hidden"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="signupBtn">
+                        <span id="signupText">Sign Up</span>
+                        <div id="signupLoader" class="loading hidden"></div>
+                    </button>
+                    
+                    <div id="signupError" class="error-message hidden"></div>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a class="auth-link" onclick="goToLogin()">Log in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="hidden">
+        <header class="header">
+            <div class="logo" onclick="goToDashboard()">
+                <div class="logo-icon">📚</div>
+                CodeCraft
+            </div>
+            <nav class="nav-links">
+                <a class="nav-link" onclick="goToDashboard()">Home</a>
+                <div class="user-avatar" id="dashboardAvatar" onclick="goToProfile()">👤</div>
+            </nav>
+        </header>
+        
+        <div class="main-content">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input class="search-input" type="text" id="searchInput" placeholder="Search for data structures or algorithms" oninput="performSearch()">
+                </div>
+            </div>
+
+            <h2 class="section-title">Data Structures</h2>
+            <div class="cards-grid" id="dataStructuresGrid"></div>
+
+            <h2 class="section-title">Algorithms</h2>
+            <div class="cards-grid" id="algorithmsGrid"></div>
+        </div>
+    </div>
+
+
+    <!-- Topic Detail Page -->
+    <div id="topicPage" class="hidden">
+        <header class="header">
+            <div class="logo" onclick="goToDashboard()">
+                <div class="logo-icon">📚</div>
+                CodeCraft
+            </div>
+            <nav class="nav-links">
+                <a class="nav-link" onclick="goToDashboard()">Home</a>
+                <div class="user-avatar" id="topicAvatar" onclick="goToProfile()">👤</div>
+            </nav>
+        </header>
+        
+        <div class="main-content">
+            <div class="detail-container">
+                <div class="breadcrumb">
+                    <a class="breadcrumb-link" onclick="goToDashboard()">Data Structures</a> / <span id="currentTopic">Topic</span>
+                </div>
+
+                <h1 class="detail-title" id="topicTitle">Topic Title</h1>
+                <p class="detail-intro" id="topicIntro">Topic introduction...</p>
+
+                <div class="section">
+                    <h2 class="section-header">Description</h2>
+                    <p id="topicDescription">Detailed description...</p>
+                </div>
+
+                <!-- ADD THIS SECTION FOR THE DIAGRAM -->
+                <div class="section">
+                    <h2 class="section-header">Visualization</h2>
+                    <div id="topicDiagram" class="diagram-container">
+                        <!-- Diagram SVG will be inserted here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-header">Example Code</h2>
+                    <div class="code-block" id="topicCode"># Code example will appear here</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="hidden">
+        <header class="header">
+            <div class="logo" onclick="goToDashboard()">
+                <div class="logo-icon">📚</div>
+                CodeCraft
+            </div>
+            <nav class="nav-links">
+                <a class="nav-link" onclick="goToDashboard()">Home</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </nav>
+        </header>
+        
+        <div class="main-content">
+            <div class="avatar-section">
+                <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Choose Your Avatar</h2>
+                <p style="color: #666; margin-bottom: 1.5rem;">Select an avatar that represents you in the community</p>
+                
+                <div class="avatar-grid">
+                    <div class="avatar-option" data-avatar="👤" onclick="selectAvatar('👤')">👤</div>
+                    <div class="avatar-option" data-avatar="😊" onclick="selectAvatar('😊')">😊</div>
+                    <div class="avatar-option" data-avatar="🧑‍💻" onclick="selectAvatar('🧑‍💻')">🧑‍💻</div>
+                    <div class="avatar-option" data-avatar="👩‍💻" onclick="selectAvatar('👩‍💻')">👩‍💻</div>
+                    <div class="avatar-option" data-avatar="🦸" onclick="selectAvatar('🦸')">🦸</div>
+                    <div class="avatar-option" data-avatar="🧙‍♂️" onclick="selectAvatar('🧙‍♂️')">🧙‍♂️</div>
+                    <div class="avatar-option" data-avatar="🎨" onclick="selectAvatar('🎨')">🎨</div>
+                    <div class="avatar-option" data-avatar="🚀" onclick="selectAvatar('🚀')">🚀</div>
+                    <div class="avatar-option" data-avatar="🌟" onclick="selectAvatar('🌟')">🌟</div>
+                    <div class="avatar-option" data-avatar="🎯" onclick="selectAvatar('🎯')">🎯</div>
+                    <div class="avatar-option" data-avatar="💡" onclick="selectAvatar('💡')">💡</div>
+                    <div class="avatar-option" data-avatar="🔥" onclick="selectAvatar('🔥')">🔥</div>
+                </div>
+            </div>
+
+            <div class="progress-card">
+                <h1 style="font-size: 1.75rem; font-weight: 600; margin-bottom: 0.5rem;">My Progress</h1>
+                <p style="color: #666; margin-bottom: 2rem;">Track your learning journey and see how far you've come.</p>
+
+                <div class="progress-label">
+                    <span>Overall Completion</span>
+                    <span id="overallProgress">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="overallProgressBar" style="width: 0%"></div>
+                </div>
+                <p style="color: #666; font-size: 0.875rem; margin-top: 0.5rem; font-style: italic;">You're doing great! Keep up the momentum.</p>
+            </div>
+
+            <div class="progress-card">
+                <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Data Structures</h2>
+                <div id="dataStructuresProgress"></div>
+            </div>
+
+            <div class="progress-card">
+                <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Algorithms</h2>
+                <div id="algorithmsProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
